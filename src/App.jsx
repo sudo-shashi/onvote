@@ -278,6 +278,7 @@ function App() {
   const [lastSyncedAt, setLastSyncedAt] = useState(null)
   const [transaction, setTransaction] = useState({ phase: 'idle' })
   const [recentEvents, setRecentEvents] = useState([])
+  const [isEventsOpen, setIsEventsOpen] = useState(false)
 
   const eventCursorRef = useRef(null)
   const refreshPollStateRef = useRef(null)
@@ -692,85 +693,93 @@ function App() {
 
   return (
     <div className="app-shell">
-      <div className="ambient ambient-left" />
-      <div className="ambient ambient-right" />
-
-      <header className="topbar">
-        <div className="topbar-brand">
-          <h1>OnVote</h1>
-          <p>On-chain polls on Stellar Testnet — create, vote, and track results in real time.</p>
+      {/* Sidebar (left rail) */}
+      <aside className="sidebar">
+        <div className="sidebar-brand glass">
+          <div className="brand-mark" aria-hidden="true">
+            <span className="brand-mark-glow" />
+            <span className="brand-mark-text">OV</span>
+          </div>
+          <div className="brand-copy">
+            <h1>OnVote</h1>
+            <p>On-chain polls on Stellar Testnet</p>
+          </div>
         </div>
 
-        <div className="topbar-actions">
+        <div className="sidebar-network glass">
           <div className="network-pill">
             <span className="status-dot" />
             {NETWORK_PASSPHRASE === 'Test SDF Network ; September 2015' ? 'Testnet' : 'Custom network'}
           </div>
+        </div>
 
+        <div className="sidebar-wallet glass">
           {wallet ? (
             <button
-              className="secondary-button wallet-disconnect-button"
+              className="wallet-card"
               onClick={handleDisconnectWallet}
               type="button"
               aria-label={`Disconnect wallet ${wallet.address}`}
             >
-              <span className="wallet-disconnect-copy">
-                <span className="wallet-disconnect-status">Wallet connected</span>
-                <span className="wallet-disconnect-address">{shortenAddress(wallet.address)}</span>
+              <span className="wallet-card-top">
+                <span className="wallet-card-label">Wallet connected</span>
+                <span className="disconnect-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M14 7V5a2 2 0 0 0-2-2H5A2 2 0 0 0 3 5v14a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M10 12h11m-4-4 4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
               </span>
-              <span className="disconnect-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" focusable="false">
-                  <path
-                    d="M14 7V5a2 2 0 0 0-2-2H5A2 2 0 0 0 3 5v14a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M10 12h11m-4-4 4 4-4 4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-              <span className="wallet-disconnect-label">Disconnect</span>
+              <span className="wallet-card-address">{shortenAddress(wallet.address)}</span>
             </button>
           ) : (
-            <button className="primary-button" onClick={handleConnectWallet} disabled={isWalletBusy}>
+            <button className="primary-button wallet-cta" onClick={handleConnectWallet} disabled={isWalletBusy}>
               {isWalletBusy ? 'Opening wallets...' : 'Connect wallet'}
             </button>
           )}
-          {selectedPollId && (
-            <button className="ghost-button small" onClick={dismissSelectedPoll} type="button">
-              Close selected poll
-            </button>
-          )}
         </div>
-      </header>
 
-      {notice && (
-        <section className={`notice ${notice.type}`}>
-          <strong>{notice.title}</strong>
-          <span>{notice.message}</span>
-        </section>
-      )}
+        <div className="sidebar-stats">
+          <StatCard label="Total polls" value={stats.totalPolls} />
+          <StatCard label="Active polls" value={stats.activePolls} />
+          <StatCard label="Total votes" value={stats.totalVotes} />
+        </div>
 
-      {bootError && (
-        <section className="notice error">
-          <strong>{bootError.title}</strong>
-          <span>{bootError.message}</span>
-        </section>
-      )}
+        {selectedPollId && (
+          <button className="ghost-button small sidebar-close" onClick={dismissSelectedPoll} type="button">
+            Close selected poll
+          </button>
+        )}
 
-      <main className="dashboard">
-        <section className="hero-grid">
-          <article className="panel hero-card">
-            <div>
+        <button
+          className="ghost-button small sidebar-events"
+          onClick={() => setIsEventsOpen(true)}
+          type="button"
+        >
+          View event feed ({recentEvents.length})
+        </button>
+      </aside>
+
+      {/* Main column */}
+      <div className="main-column">
+        {notice && (
+          <section className={`notice glass ${notice.type}`}>
+            <strong>{notice.title}</strong>
+            <span>{notice.message}</span>
+          </section>
+        )}
+
+        {bootError && (
+          <section className="notice glass error">
+            <strong>{bootError.title}</strong>
+            <span>{bootError.message}</span>
+          </section>
+        )}
+
+        <main className="dashboard">
+          {/* Hero strip — supported wallets */}
+          <section className="hero-strip glass">
+            <div className="hero-strip-copy">
               <p className="section-label">Supported wallets</p>
               <h2>Connect any Stellar wallet to vote</h2>
               <p>
@@ -778,67 +787,95 @@ function App() {
                 Create polls, cast votes, and close polls directly from the browser.
               </p>
             </div>
-
-            <div className="wallet-grid">
+            <div className="wallet-rail">
               {SUPPORTED_WALLET_NAMES.map((walletName) => (
                 <div key={walletName} className="wallet-chip">
                   {walletName}
                 </div>
               ))}
             </div>
-          </article>
+          </section>
 
-          <article className="panel status-card">
-            <div className="status-card-top">
-              <p className="section-label">Transaction status</p>
-              <span className={`phase-badge ${transaction.phase}`}>{transaction.phase}</span>
-            </div>
-            <p className="status-message">{getTransactionCopy(transaction)}</p>
-
-            {transaction.hash && (
-              <a
-                className="inline-link"
-                href={getExplorerLink('tx', transaction.hash)}
-                target="_blank"
-                rel="noreferrer"
-              >
-                View transaction on Stellar Expert
-              </a>
-            )}
-
-            <dl className="status-list">
-              <div>
-                <dt>RPC</dt>
-                <dd>{RPC_URL}</dd>
+          {/* Status + sync paired at top */}
+          <section className="status-row">
+            <article className="panel glass status-card">
+              <div className="panel-head">
+                <div>
+                  <p className="section-label">Transaction status</p>
+                  <h3>Live phase tracker</h3>
+                </div>
+                <span className={`phase-badge ${transaction.phase}`}>{transaction.phase}</span>
               </div>
-              <div>
-                <dt>Contract</dt>
-                <dd>{CONTRACT_ID || 'Add VITE_STELLAR_CONTRACT_ID'}</dd>
-              </div>
-              <div>
-                <dt>Last sync</dt>
-                <dd>{formatDateTime(lastSyncedAt)}</dd>
-              </div>
-              <div>
-                <dt>Selected poll</dt>
-                <dd>
-                  {selectedPoll
-                    ? `${selectedPollState || 'unknown'} · ${selectedPollTotalVotes} vote${selectedPollTotalVotes !== 1 ? 's' : ''}`
-                    : 'None selected'}
-                </dd>
-              </div>
-            </dl>
-          </article>
-        </section>
+              <p className="status-message">{getTransactionCopy(transaction)}</p>
 
-        <section className="stats-grid">
-          <StatCard label="Total polls" value={stats.totalPolls} />
-          <StatCard label="Active polls" value={stats.activePolls} />
-          <StatCard label="Total votes" value={stats.totalVotes} />
-        </section>
+              {transaction.hash && (
+                <a
+                  className="inline-link"
+                  href={getExplorerLink('tx', transaction.hash)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View transaction on Stellar Expert ↗
+                </a>
+              )}
 
-        <section className="workspace-grid">
-          <article className="panel compose-panel">
+              <dl className="status-list">
+                <div>
+                  <dt>RPC</dt>
+                  <dd>{RPC_URL}</dd>
+                </div>
+                <div>
+                  <dt>Contract</dt>
+                  <dd>{CONTRACT_ID || 'Add VITE_STELLAR_CONTRACT_ID'}</dd>
+                </div>
+                <div>
+                  <dt>Last sync</dt>
+                  <dd>{formatDateTime(lastSyncedAt)}</dd>
+                </div>
+                <div>
+                  <dt>Selected poll</dt>
+                  <dd>
+                    {selectedPoll
+                      ? `${selectedPollState || 'unknown'} · ${selectedPollTotalVotes} vote${selectedPollTotalVotes !== 1 ? 's' : ''}`
+                      : 'None'}
+                  </dd>
+                </div>
+              </dl>
+            </article>
+
+            <article className="panel glass sync-card">
+              <div className="panel-head">
+                <div>
+                  <p className="section-label">Live sync</p>
+                  <h3>Contract activity</h3>
+                </div>
+                <button className="secondary-button" onClick={() => refreshPollState()} type="button">
+                  {isRefreshing || isBooting ? 'Refreshing...' : 'Refresh now'}
+                </button>
+              </div>
+
+              <ul className="sync-list">
+                <li><span className="sync-bullet" /> Source of truth: deployed Soroban contract state</li>
+                <li><span className="sync-bullet" /> Real-time updates: contract event polling every 5 seconds</li>
+                <li><span className="sync-bullet" /> Error handling: wallet missing, wallet rejected, insufficient balance</li>
+                <li><span className="sync-bullet" /> Wallet mode: {wallet ? `${wallet.walletName} connected` : 'read-only browsing'}</li>
+              </ul>
+
+              {CONTRACT_ID && (
+                <a
+                  className="inline-link"
+                  href={getExplorerLink('contract', CONTRACT_ID)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Open contract on Stellar Expert ↗
+                </a>
+              )}
+            </article>
+          </section>
+
+          {/* Compose — full width */}
+          <section className="panel glass compose-panel">
             <div className="panel-head">
               <div>
                 <p className="section-label">Create a poll</p>
@@ -847,50 +884,52 @@ function App() {
               <span className="panel-meta">{wallet ? shortenAddress(wallet.address) : 'Wallet required'}</span>
             </div>
 
-            <label className="field">
-              <span>Question</span>
-              <textarea
-                value={form.question}
-                onChange={(event) => setForm((current) => ({ ...current, question: event.target.value }))}
-                placeholder="What should the community vote on?"
-                rows={4}
-              />
-            </label>
+            <div className="compose-grid">
+              <label className="field">
+                <span>Question</span>
+                <textarea
+                  value={form.question}
+                  onChange={(event) => setForm((current) => ({ ...current, question: event.target.value }))}
+                  placeholder="What should the community vote on?"
+                  rows={4}
+                />
+              </label>
 
-            <div className="field">
-              <span>Options</span>
-              <div className="option-stack">
-                {form.options.map((option, index) => (
-                  <div key={`${index}-${form.options.length}`} className="option-row">
-                    <input
-                      value={option}
-                      onChange={(event) => updateOption(index, event.target.value)}
-                      placeholder={`Option ${index + 1}`}
-                    />
-                    <button className="icon-button" onClick={() => removeOption(index)} type="button">
-                      Remove
-                    </button>
-                  </div>
-                ))}
+              <div className="field">
+                <span>Options</span>
+                <div className="option-stack">
+                  {form.options.map((option, index) => (
+                    <div key={`${index}-${form.options.length}`} className="option-row">
+                      <input
+                        value={option}
+                        onChange={(event) => updateOption(index, event.target.value)}
+                        placeholder={`Option ${index + 1}`}
+                      />
+                      <button className="icon-button" onClick={() => removeOption(index)} type="button">
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <button className="ghost-button" onClick={addOption} type="button">
+                  + Add option
+                </button>
               </div>
-              <button className="ghost-button" onClick={addOption} type="button">
-                Add option
-              </button>
-            </div>
 
-            <div className="field">
-              <span>Duration</span>
-              <div className="duration-row">
-                {DURATION_PRESETS.map((minutes) => (
-                  <button
-                    key={minutes}
-                    className={minutes === form.duration ? 'duration-pill active' : 'duration-pill'}
-                    onClick={() => setForm((current) => ({ ...current, duration: minutes }))}
-                    type="button"
-                  >
-                    {minutes >= 60 ? `${minutes / 60}h` : `${minutes}m`}
-                  </button>
-                ))}
+              <div className="field">
+                <span>Duration</span>
+                <div className="duration-row">
+                  {DURATION_PRESETS.map((minutes) => (
+                    <button
+                      key={minutes}
+                      className={minutes === form.duration ? 'duration-pill active' : 'duration-pill'}
+                      onClick={() => setForm((current) => ({ ...current, duration: minutes }))}
+                      type="button"
+                    >
+                      {minutes >= 60 ? `${minutes / 60}h` : `${minutes}m`}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -913,193 +952,133 @@ function App() {
                 {createPollAction.label}
               </button>
             </div>
-          </article>
+          </section>
 
-          <article className="panel sync-panel">
-            <div className="panel-head">
+          {/* Poll feed — full width below */}
+          <section className="panel glass feed-panel">
+            <div className="controls-head">
               <div>
-                <p className="section-label">Live sync</p>
-                <h3>Contract activity</h3>
-              </div>
-              <button className="secondary-button" onClick={() => refreshPollState()} type="button">
-                {isRefreshing || isBooting ? 'Refreshing...' : 'Refresh now'}
-              </button>
-            </div>
-
-            <ul className="sync-list">
-              <li>Source of truth: deployed Soroban contract state</li>
-              <li>Real-time updates: contract event polling every 5 seconds</li>
-              <li>Error handling: wallet missing, wallet rejected, insufficient balance</li>
-              <li>Wallet mode: {wallet ? `${wallet.walletName} connected` : 'read-only browsing'}</li>
-            </ul>
-
-            {CONTRACT_ID && (
-              <a
-                className="inline-link"
-                href={getExplorerLink('contract', CONTRACT_ID)}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Open contract on Stellar Expert
-              </a>
-            )}
-
-            <div className="event-feed">
-              <div className="event-feed-head">
-                <p className="section-label">Recent contract events</p>
-                <span className="panel-meta">{recentEvents.length} tracked</span>
+                <p className="section-label">Poll feed</p>
+                <h3>Browse &amp; vote on polls</h3>
               </div>
 
-              {recentEvents.length === 0 ? (
-                <p className="event-empty">
-                  Waiting for new create, vote, close, or delete events from testnet.
-                </p>
-              ) : (
-                <div className="event-list">
-                  {recentEvents.map((event) => (
-                    <article key={event.id} className="event-card">
-                      <div className="event-card-head">
-                        <div>
-                          <strong>{event.title}</strong>
-                          <p>{event.summary}</p>
-                        </div>
-                        <span
-                          className={`state-pill ${
-                            event.action === 'close' || event.action === 'delete'
-                              ? 'closed'
-                              : 'active'
-                          }`}
-                        >
-                          {event.action}
-                        </span>
-                      </div>
+              <div className="control-strip">
+                <div className="search-wrap">
+                  <span className="search-icon" aria-hidden="true">⌕</span>
+                  <input
+                    className="search-input"
+                    placeholder="Search polls or options"
+                    value={searchQuery}
+                    onChange={(event) => setSearchQuery(event.target.value)}
+                  />
+                </div>
 
-                      <div className="event-meta">
-                        <span>Poll #{event.pollId}</span>
-                        <span>Ledger {event.ledger}</span>
-                        <span>{formatEventTime(event.ledgerClosedAt)}</span>
-                      </div>
-
-                      <a
-                        className="inline-link"
-                        href={getExplorerLink('tx', event.txHash)}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        View event transaction
-                      </a>
-                    </article>
+                <div className="chip-group" role="tablist" aria-label="Filter polls">
+                  {[
+                    { value: 'all', label: 'All' },
+                    { value: 'active', label: 'Active' },
+                    { value: 'closed', label: 'Closed' },
+                  ].map((chip) => (
+                    <button
+                      key={chip.value}
+                      role="tab"
+                      aria-selected={filter === chip.value}
+                      className={filter === chip.value ? 'filter-chip active' : 'filter-chip'}
+                      onClick={() => setFilter(chip.value)}
+                      type="button"
+                    >
+                      {chip.label}
+                    </button>
                   ))}
                 </div>
-              )}
+
+                <select
+                  className="sort-select"
+                  value={sortBy}
+                  onChange={(event) => setSortBy(event.target.value)}
+                >
+                  <option value="ending-soon">Ending soon</option>
+                  <option value="most-votes">Most votes</option>
+                  <option value="newest">Newest</option>
+                  <option value="oldest">Oldest</option>
+                </select>
+              </div>
             </div>
-          </article>
-        </section>
 
-        <section className="panel poll-panel">
-          <div className="controls-head">
-            <div>
-              <p className="section-label">Poll feed</p>
-              <h3>Browse &amp; vote on polls</h3>
-            </div>
+            {isBooting ? (
+              <div className="empty-state">
+                <h4>Loading contract state...</h4>
+                <p>The app is preparing a read account and fetching polls from testnet.</p>
+              </div>
+            ) : visiblePolls.length === 0 ? (
+              <div className="empty-state">
+                <h4>No polls found</h4>
+                <p>Create the first on-chain poll to start testing real-time voting.</p>
+              </div>
+            ) : (
+              <div className="poll-grid">
+                {visiblePolls.map((poll) => {
+                  const totalVotes = poll.votes.reduce((sum, vote) => sum + vote, 0)
+                  const state = getPollState(poll)
+                  const hasVoted = Boolean(voteLookup[poll.id])
+                  const voteAction = getVoteActionState({
+                    poll,
+                    walletAddress: wallet?.address,
+                    hasVoted,
+                    transactionPhase: transaction.phase,
+                    isWalletBusy,
+                  })
+                  const isOwner = isPollOwner(poll, wallet?.address)
 
-            <div className="control-strip">
-              <input
-                className="search-input"
-                placeholder="Search polls or options"
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-              />
+                  return (
+                    <article key={poll.id} className="poll-card glass">
+                      <div className="poll-card-head">
+                        <div className="poll-card-id">
+                          <span className="poll-card-num">#{poll.id}</span>
+                          <span className={`state-pill ${state}`}>{state}</span>
+                        </div>
+                        <span className="time-pill">{formatTimeLeft(poll.expiresAt)}</span>
+                      </div>
 
-              <select value={filter} onChange={(event) => setFilter(event.target.value)}>
-                <option value="all">All</option>
-                <option value="active">Active</option>
-                <option value="closed">Closed</option>
-              </select>
+                      <h4 className="poll-question">{poll.question}</h4>
+                      <p className="poll-meta">
+                        {totalVotes} vote{totalVotes !== 1 ? 's' : ''} ·{' '}
+                        {state === 'active' ? 'Voting open' : 'Voting closed'}
+                      </p>
 
-              <select value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
-                <option value="ending-soon">Ending soon</option>
-                <option value="most-votes">Most votes</option>
-                <option value="newest">Newest</option>
-                <option value="oldest">Oldest</option>
-              </select>
-            </div>
-          </div>
+                      <div className="poll-options">
+                        {poll.options.map((option, index) => {
+                          const votes = poll.votes[index] || 0
+                          const percentage = totalVotes === 0 ? 0 : Math.round((votes / totalVotes) * 100)
+                          const canVote = voteAction.action === 'vote' || voteAction.action === 'connect'
 
-          {isBooting ? (
-            <div className="empty-state">
-              <h4>Loading contract state...</h4>
-              <p>The app is preparing a read account and fetching polls from testnet.</p>
-            </div>
-          ) : visiblePolls.length === 0 ? (
-            <div className="empty-state">
-              <h4>No polls found</h4>
-              <p>Create the first on-chain poll to start testing real-time voting.</p>
-            </div>
-          ) : (
-            <div className="poll-grid">
-              {visiblePolls.map((poll) => {
-                const totalVotes = poll.votes.reduce((sum, vote) => sum + vote, 0)
-                const state = getPollState(poll)
-                const hasVoted = Boolean(voteLookup[poll.id])
-                const voteAction = getVoteActionState({
-                  poll,
-                  walletAddress: wallet?.address,
-                  hasVoted,
-                  transactionPhase: transaction.phase,
-                  isWalletBusy,
-                })
-                const isOwner = isPollOwner(poll, wallet?.address)
-
-                return (
-                  <article key={poll.id} className="poll-card">
-                    {/* Card header */}
-                    <div className="poll-card-head">
-                      <span className={`state-pill ${state}`}>{state}</span>
-                      <span className="time-pill">{formatTimeLeft(poll.expiresAt)}</span>
-                    </div>
-
-                    {/* Question */}
-                    <h4>{poll.question}</h4>
-                    <p className="poll-meta">
-                      {totalVotes} vote{totalVotes !== 1 ? 's' : ''} · Poll #{poll.id}
-                    </p>
-
-                    {/* Options with vote buttons + progress bars */}
-                    <div className="poll-options">
-                      {poll.options.map((option, index) => {
-                        const votes = poll.votes[index] || 0
-                        const percentage = totalVotes === 0 ? 0 : Math.round((votes / totalVotes) * 100)
-                        const canVote = voteAction.action === 'vote' || voteAction.action === 'connect'
-
-                        return (
-                          <div key={`${poll.id}-${option}`} className="poll-option">
-                            <button
-                              className={`poll-option-btn${hasVoted || state === 'closed' ? ' voted' : ''}`}
-                              onClick={() =>
-                                voteAction.action === 'connect'
-                                  ? handleConnectWallet()
-                                  : canVote
-                                    ? handleVote(poll.id, index)
-                                    : undefined
-                              }
-                              disabled={voteAction.disabled && voteAction.action !== 'connect'}
-                              type="button"
-                              title={voteAction.action === 'connect' ? 'Connect wallet to vote' : undefined}
-                            >
-                              <span className="poll-option-label">{option}</span>
-                              <span className="poll-option-meta">{votes} · {percentage}%</span>
-                            </button>
-                            <div className="poll-option-bar">
-                              <div className="poll-option-bar-fill" style={{ width: `${percentage}%` }} />
+                          return (
+                            <div key={`${poll.id}-${option}`} className="poll-option">
+                              <button
+                                className={`poll-option-btn${hasVoted || state === 'closed' ? ' voted' : ''}`}
+                                onClick={() =>
+                                  voteAction.action === 'connect'
+                                    ? handleConnectWallet()
+                                    : canVote
+                                      ? handleVote(poll.id, index)
+                                      : undefined
+                                }
+                                disabled={voteAction.disabled && voteAction.action !== 'connect'}
+                                type="button"
+                                title={voteAction.action === 'connect' ? 'Connect wallet to vote' : undefined}
+                              >
+                                <span className="poll-option-label">{option}</span>
+                                <span className="poll-option-meta">{votes} · {percentage}%</span>
+                              </button>
+                              <div className="poll-option-bar">
+                                <div className="poll-option-bar-fill" style={{ width: `${percentage}%` }} />
+                              </div>
                             </div>
-                          </div>
-                        )
-                      })}
-                    </div>
+                          )
+                        })}
+                      </div>
 
-                    {/* Footer: status hint + owner actions */}
-                    <div className="poll-card-footer">
+                      <div className="poll-card-footer">
                         <button
                           className="ghost-button small"
                           onClick={() => openPollDetails(poll.id)}
@@ -1107,65 +1086,135 @@ function App() {
                         >
                           Details
                         </button>
-                      {state === 'active' && !wallet?.address && (
-                        <button className="connect-hint" onClick={handleConnectWallet} type="button">
-                          Connect wallet to vote
-                        </button>
-                      )}
-                      {state === 'active' && hasVoted && (
-                        <span className="voted-badge">✓ You voted</span>
-                      )}
-                      {state === 'active' && wallet?.address && !hasVoted && voteAction.action === 'pending' && (
-                        <span className="poll-meta">Submitting…</span>
-                      )}
+                        {state === 'active' && !wallet?.address && (
+                          <button className="connect-hint" onClick={handleConnectWallet} type="button">
+                            Connect wallet to vote
+                          </button>
+                        )}
+                        {state === 'active' && hasVoted && (
+                          <span className="voted-badge">✓ You voted</span>
+                        )}
+                        {state === 'active' && wallet?.address && !hasVoted && voteAction.action === 'pending' && (
+                          <span className="poll-meta">Submitting…</span>
+                        )}
 
-                      {isOwner && state === 'active' && (
-                        <div className="owner-actions">
-                          <button
-                            className="ghost-button small"
-                            onClick={() => handleClosePoll(poll.id)}
-                            type="button"
-                          >
-                            Close
-                          </button>
-                          <button
-                            className="ghost-button small danger"
-                            onClick={() => handleMenuDeletePoll(poll.id)}
-                            type="button"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      )}
-                      {isOwner && state === 'closed' && (
-                        <div className="owner-actions">
-                          <button
-                            className="ghost-button small danger"
-                            onClick={() => handleMenuDeletePoll(poll.id)}
-                            type="button"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </article>
-                )
-              })}
-            </div>
-          )}
-        </section>
+                        {isOwner && state === 'active' && (
+                          <div className="owner-actions">
+                            <button
+                              className="ghost-button small"
+                              onClick={() => handleClosePoll(poll.id)}
+                              type="button"
+                            >
+                              Close
+                            </button>
+                            <button
+                              className="ghost-button small danger"
+                              onClick={() => handleMenuDeletePoll(poll.id)}
+                              type="button"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        )}
+                        {isOwner && state === 'closed' && (
+                          <div className="owner-actions">
+                            <button
+                              className="ghost-button small danger"
+                              onClick={() => handleMenuDeletePoll(poll.id)}
+                              type="button"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </article>
+                  )
+                })}
+              </div>
+            )}
+          </section>
+        </main>
+      </div>
 
-      </main>
+      {/* Slide-in event drawer */}
+      <div
+        className={`event-drawer-overlay${isEventsOpen ? ' open' : ''}`}
+        onClick={() => setIsEventsOpen(false)}
+        aria-hidden={!isEventsOpen}
+      />
+      <aside
+        className={`event-drawer glass${isEventsOpen ? ' open' : ''}`}
+        aria-hidden={!isEventsOpen}
+        aria-label="Recent contract events"
+      >
+        <div className="event-drawer-head">
+          <div>
+            <p className="section-label">Recent contract events</p>
+            <h3>Activity stream</h3>
+          </div>
+          <button
+            className="icon-button"
+            onClick={() => setIsEventsOpen(false)}
+            type="button"
+            aria-label="Close event feed"
+          >
+            ✕
+          </button>
+        </div>
+
+        {recentEvents.length === 0 ? (
+          <p className="event-empty">
+            Waiting for new create, vote, close, or delete events from testnet.
+          </p>
+        ) : (
+          <div className="event-list">
+            {recentEvents.map((event) => (
+              <article key={event.id} className="event-card glass">
+                <div className="event-card-head">
+                  <div>
+                    <strong>{event.title}</strong>
+                    <p>{event.summary}</p>
+                  </div>
+                  <span
+                    className={`state-pill ${
+                      event.action === 'close' || event.action === 'delete'
+                        ? 'closed'
+                        : 'active'
+                    }`}
+                  >
+                    {event.action}
+                  </span>
+                </div>
+
+                <div className="event-meta">
+                  <span>Poll #{event.pollId}</span>
+                  <span>Ledger {event.ledger}</span>
+                  <span>{formatEventTime(event.ledgerClosedAt)}</span>
+                </div>
+
+                <a
+                  className="inline-link"
+                  href={getExplorerLink('tx', event.txHash)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View on Stellar Expert ↗
+                </a>
+              </article>
+            ))}
+          </div>
+        )}
+      </aside>
     </div>
   )
 }
 
 function StatCard({ label, value }) {
   return (
-    <article className="panel stat-card">
+    <article className="panel glass stat-card">
       <p className="section-label">{label}</p>
-      <strong>{value}</strong>
+      <strong className="stat-card-value">{value}</strong>
     </article>
   )
 }

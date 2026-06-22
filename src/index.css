@@ -1,39 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
-  /* Palette — soft neutrals with a single gentle accent */
-  --bg:           #f7f7f5;
-  --surface:      #ffffff;
-  --surface-alt:  #f2f2f0;
-  --border:       #e4e4e0;
-  --border-focus: #a0a09a;
+  /* Glass surface tokens */
+  --glass-bg:          rgba(255, 255, 255, 0.06);
+  --glass-bg-strong:   rgba(255, 255, 255, 0.10);
+  --glass-bg-soft:     rgba(255, 255, 255, 0.04);
+  --glass-border:      rgba(255, 255, 255, 0.12);
+  --glass-border-hi:   rgba(255, 255, 255, 0.22);
+  --glass-inner:       inset 0 1px 0 0 rgba(255, 255, 255, 0.10);
+  --glass-blur:        blur(24px) saturate(160%);
 
-  --text-primary:   #1a1a18;
-  --text-secondary: #6b6b66;
-  --text-tertiary:  #9b9b96;
+  /* Text */
+  --text-primary:   #f5f6ff;
+  --text-secondary: rgba(232, 235, 255, 0.72);
+  --text-tertiary:  rgba(200, 207, 240, 0.50);
 
-  --accent:         #5b6af0;   /* soft indigo */
-  --accent-light:   #eef0fd;
-  --accent-hover:   #4a58e0;
+  /* Accents */
+  --accent-1: #7c5cff;   /* violet */
+  --accent-2: #29d9c2;   /* cyan */
+  --accent-3: #ff7ac6;   /* pink */
+  --accent-grad: linear-gradient(135deg, #7c5cff 0%, #29d9c2 100%);
+  --accent-grad-soft: linear-gradient(135deg, rgba(124, 92, 255, 0.18), rgba(41, 217, 194, 0.18));
 
-  --success:        #2d9e6b;
-  --success-light:  #e8f7f0;
-  --warning:        #c97c2a;
-  --warning-light:  #fdf3e7;
-  --danger:         #d94f4f;
-  --danger-light:   #fdf0f0;
+  /* Semantic */
+  --success:        #4ade80;
+  --success-soft:   rgba(74, 222, 128, 0.16);
+  --warning:        #fbbf24;
+  --warning-soft:   rgba(251, 191, 36, 0.16);
+  --danger:         #fb7185;
+  --danger-soft:    rgba(251, 113, 133, 0.16);
+  --info:           #60a5fa;
+  --info-soft:      rgba(96, 165, 250, 0.16);
 
+  /* Radii */
   --radius-sm:  0.5rem;
-  --radius-md:  0.75rem;
-  --radius-lg:  1rem;
-  --radius-xl:  1.25rem;
+  --radius-md:  0.85rem;
+  --radius-lg:  1.1rem;
+  --radius-xl:  1.5rem;
   --radius-pill: 999px;
 
-  --shadow-sm:  0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md:  0 4px 12px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
-  --shadow-lg:  0 8px 24px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+  /* Shadows */
+  --shadow-glass: 0 16px 40px -16px rgba(8, 4, 32, 0.55), 0 2px 6px rgba(8, 4, 32, 0.25);
+  --shadow-glow:  0 0 0 1px rgba(124, 92, 255, 0.35), 0 0 28px rgba(124, 92, 255, 0.35);
 }
 
 * {
@@ -57,8 +67,48 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--text-primary);
-  background-color: var(--bg);
+  background: #060614;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated aurora background — base layer for glass refraction */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -20vmax;
+  z-index: -2;
+  background:
+    radial-gradient(45vmax 45vmax at 18% 22%, rgba(124, 92, 255, 0.55), transparent 60%),
+    radial-gradient(50vmax 50vmax at 82% 18%, rgba(41, 217, 194, 0.40), transparent 60%),
+    radial-gradient(55vmax 55vmax at 65% 85%, rgba(255, 122, 198, 0.35), transparent 60%),
+    radial-gradient(60vmax 60vmax at 12% 90%, rgba(96, 165, 250, 0.30), transparent 60%);
+  filter: blur(40px);
+  animation: aurora-drift 32s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Subtle starfield noise to add texture under the glass */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    radial-gradient(1px 1px at 25% 30%, rgba(255,255,255,0.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 65%, rgba(255,255,255,0.35) 50%, transparent 51%),
+    radial-gradient(1px 1px at 45% 80%, rgba(255,255,255,0.30) 50%, transparent 51%),
+    radial-gradient(1px 1px at 85% 20%, rgba(255,255,255,0.40) 50%, transparent 51%),
+    radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.35) 50%, transparent 51%);
+  background-size: 600px 600px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate3d(0, 0, 0)      scale(1); }
+  50%  { transform: translate3d(4vmax, -3vmax, 0) scale(1.05); }
+  100% { transform: translate3d(-3vmax, 4vmax, 0) scale(0.98); }
 }
 
 #root {
@@ -68,18 +118,44 @@ body {
 button, input, select, textarea {
   font-family: inherit;
   font-size: inherit;
+  color: inherit;
 }
 
 a {
-  color: var(--accent);
+  color: var(--accent-2);
   text-decoration: none;
+  transition: color 160ms ease;
 }
 
 a:hover {
-  text-decoration: underline;
+  color: #6ff5e0;
+  text-decoration: none;
 }
 
 ::selection {
-  background: var(--accent-light);
-  color: var(--text-primary);
+  background: rgba(124, 92, 255, 0.45);
+  color: #fff;
+}
+
+/* Custom scrollbar to match the dark theme */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.18);
+  background-clip: padding-box;
+  border: 2px solid transparent;
 }
