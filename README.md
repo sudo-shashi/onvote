@@ -5,7 +5,7 @@ OnVote is a mini end-to-end Stellar + Soroban dApp: a multi-wallet polling app b
 ## Level 3 Submission Checklist (fill before submitting)
 
 - Live demo link: https://onvote.vercel.app/
-- Demo video (1 minute) link: https://drive.google.com/file/d/1SRK_eF2qJyIfuN-KMlgzCpeacAeYJ23t/view?usp=sharing
+- Demo video (1 minute) link: https://drive.google.com/file/d/1a741GLj6azIC4Ks2Eqr-tzBcCvEyzGcu/view?usp=sharing
 - Test output screenshot (3+ passing tests): ✅ (see below)
 - Public GitHub repo link: `https://github.com/sudo-shashi/onvote`
 
