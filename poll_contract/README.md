@@ -12,8 +12,8 @@ This folder contains the Soroban smart contract used by OnVote for storing polls
 ## Network Details
 
 - Network: `Stellar Testnet`
-- Contract address: `CDPYFRUN6ZRKUIKZR45AMWF7SYPQJL4WRJIBJI2SR3DWRMMANTXXRMD2`
-- Contract explorer: https://stellar.expert/explorer/testnet/contract/CDPYFRUN6ZRKUIKZR45AMWF7SYPQJL4WRJIBJI2SR3DWRMMANTXXRMD2
+- Contract address: `CCI25FHNRMJU2TLWL2LFZIBLASRYV4ROE5L7AGNEIXTQDLUT4V7P6IG3`
+- Contract explorer: https://stellar.expert/explorer/testnet/contract/CCI25FHNRMJU2TLWL2LFZIBLASRYV4ROE5L7AGNEIXTQDLUT4V7P6IG3
 - Sample contract call tx hash: `e5a4df2c3ef97235d1b33ebe043cb66ab5642d53f0319caabc9f98e2239712c8`
 - Sample call explorer: https://stellar.expert/explorer/testnet/tx/e5a4df2c3ef97235d1b33ebe043cb66ab5642d53f0319caabc9f98e2239712c8
 

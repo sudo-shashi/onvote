@@ -72,15 +72,15 @@ Below is a mobile view screenshot demonstrating the responsive layout on narrow 
 ## Deployed Contract
 
 - Network: `Stellar Testnet`
-- Contract address: `CDPYFRUN6ZRKUIKZR45AMWF7SYPQJL4WRJIBJI2SR3DWRMMANTXXRMD2`
-- Contract explorer: https://stellar.expert/explorer/testnet/contract/CDPYFRUN6ZRKUIKZR45AMWF7SYPQJL4WRJIBJI2SR3DWRMMANTXXRMD2
+- Contract address: `CCI25FHNRMJU2TLWL2LFZIBLASRYV4ROE5L7AGNEIXTQDLUT4V7P6IG3`
+- Contract explorer: https://stellar.expert/explorer/testnet/contract/CCI25FHNRMJU2TLWL2LFZIBLASRYV4ROE5L7AGNEIXTQDLUT4V7P6IG3
 
 ## Verifiable Contract Call
 
-- Deploy tx hash: `0e1e13467216b3056b5351fd7d10ea59e2bc3d3000056fe236e42d5e2cb4bcdd`
-- Stellar Expert link: https://stellar.expert/explorer/testnet/tx/0e1e13467216b3056b5351fd7d10ea59e2bc3d3000056fe236e42d5e2cb4bcdd
-- Sample `create_poll` tx hash: `e5a4df2c3ef97235d1b33ebe043cb66ab5642d53f0319caabc9f98e2239712c8`
-- Stellar Expert link: https://stellar.expert/explorer/testnet/tx/e5a4df2c3ef97235d1b33ebe043cb66ab5642d53f0319caabc9f98e2239712c8
+- Deploy tx hash: `5b521528af7541b5eaf1b89fb5b2a0db2343ac59036e489d2703f075e910aff0`
+- Stellar Expert link: https://stellar.expert/explorer/testnet/tx/5b521528af7541b5eaf1b89fb5b2a0db2343ac59036e489d2703f075e910aff0
+- Sample `create_poll` tx hash: `511a6899317357d96cf0dbcc9c84f65b697ada58206863346dcfcab14a186b77`
+- Stellar Expert link: https://stellar.expert/explorer/testnet/tx/511a6899317357d96cf0dbcc9c84f65b697ada58206863346dcfcab14a186b77
 
 ## Live Demo
 
@@ -141,7 +141,7 @@ For submission, include a screenshot of the terminal output showing **3+ tests p
 ```env
 VITE_STELLAR_RPC_URL=https://soroban-testnet.stellar.org
 VITE_STELLAR_NETWORK_PASSPHRASE=Test SDF Network ; September 2015
-VITE_STELLAR_CONTRACT_ID=CDPYFRUN6ZRKUIKZR45AMWF7SYPQJL4WRJIBJI2SR3DWRMMANTXXRMD2
+VITE_STELLAR_CONTRACT_ID=CCI25FHNRMJU2TLWL2LFZIBLASRYV4ROE5L7AGNEIXTQDLUT4V7P6IG3
 VITE_STELLAR_READ_ACCOUNT=
 VITE_STELLAR_EXPLORER_URL=https://stellar.expert/explorer/testnet
 VITE_POLL_CONTRACT_WASM_URL=/contracts/poll_contract.wasm

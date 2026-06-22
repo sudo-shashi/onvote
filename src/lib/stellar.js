@@ -31,7 +31,7 @@ if (!globalThis.Buffer) {
 const DEFAULT_RPC_URL = 'https://soroban-testnet.stellar.org'
 // Fallback only used when VITE_STELLAR_CONTRACT_ID is not set. Keep in sync
 // with the contract deployed via npm run contract:deploy (see README.md).
-const DEFAULT_CONTRACT_ID = 'CDPYFRUN6ZRKUIKZR45AMWF7SYPQJL4WRJIBJI2SR3DWRMMANTXXRMD2'
+const DEFAULT_CONTRACT_ID = 'CCI25FHNRMJU2TLWL2LFZIBLASRYV4ROE5L7AGNEIXTQDLUT4V7P6IG3'
 const READ_ACCOUNT_STORAGE_KEY = 'onvote_read_account'
 
 export const RPC_URL = import.meta.env.VITE_STELLAR_RPC_URL || DEFAULT_RPC_URL
