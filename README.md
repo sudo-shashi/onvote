@@ -40,21 +40,21 @@ This project demonstrates:
   <tr>
     <td align="center" width="50%">
       <strong>🏠 Home Page</strong><br/><br/>
-      <img width="2848" height="1572" alt="screenshot_visible_2026-04-30_17-06-27" src="https://github.com/user-attachments/assets/a1c8793f-aae9-44ed-803f-04a436d5fedd" />
+      <img width="1876" height="1005" alt="image" src="https://github.com/user-attachments/assets/854f0c2d-8b11-4f90-96a9-37dd16dffbbd" />
     </td>
     <td align="center" width="50%">
-      <strong>📝 Create Poll</strong><br/><br/>
-   <img width="2848" height="1572" alt="screenshot_visible_2026-04-30_17-14-55" src="https://github.com/user-attachments/assets/1e63b7cd-6ce2-4ef4-a07b-1ecae1771c22" />
+      <strong>📝 Stellar Wallet Kit</strong><br/><br/>
+      <img width="1876" height="1005" alt="image" src="https://github.com/user-attachments/assets/4c1d8cd4-d402-42fb-87df-a43710143279" />
     </td>
   </tr>
   <tr>
     <td align="center" width="50%">
       <strong>🗳️ Voting</strong><br/><br/>
-   <img width="2848" height="1572" alt="screenshot_visible_2026-04-30_17-17-31" src="https://github.com/user-attachments/assets/b962d4ce-2b4e-42e4-9f8e-29774f78538d" />
+   <img width="1876" height="1005" alt="image" src="https://github.com/user-attachments/assets/d8dd45d6-a811-4166-9afb-59fcacad407a" />
     </td>
     <td align="center" width="50%">
       <strong>✅ CI/CD Results</strong><br/><br/>
-    <img width="1426" height="830" alt="image" src="https://github.com/user-attachments/assets/ae849647-7b8a-412e-92b8-0fb1532a5c4a" />
+  <img width="2032" height="1161" alt="image" src="https://github.com/user-attachments/assets/3fe3cc58-9d11-479e-9939-c5b2134c0e6b" />
     </td>
   </tr>
 </table>
@@ -64,7 +64,8 @@ This project demonstrates:
 Below is a mobile view screenshot demonstrating the responsive layout on narrow screens. Replace the placeholder with a real phone-sized screenshot captured from the dev tools or a device.
 
 <div align="center">
-<img width="389" height="700" alt="2026-04-30_18-25-47" src="https://github.com/user-attachments/assets/23b9e24d-e978-4e81-9db3-dc2976486253" />
+<img width="443" height="926" alt="image" src="https://github.com/user-attachments/assets/f9aa20b6-cea2-4fad-a59f-c1e8637422cb" />
+
 
 </div>
 
