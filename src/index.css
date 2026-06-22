@@ -18,11 +18,11 @@
   --text-tertiary:  rgba(200, 207, 240, 0.50);
 
   /* Accents */
-  --accent-1: #7c5cff;   /* violet */
-  --accent-2: #29d9c2;   /* cyan */
-  --accent-3: #ff7ac6;   /* pink */
-  --accent-grad: linear-gradient(135deg, #7c5cff 0%, #29d9c2 100%);
-  --accent-grad-soft: linear-gradient(135deg, rgba(124, 92, 255, 0.18), rgba(41, 217, 194, 0.18));
+  --accent-1: #5b8cff;   /* indigo */
+  --accent-2: #4fd1c5;   /* teal */
+  --accent-3: #a78bfa;   /* violet */
+  --accent-grad: linear-gradient(135deg, #5b8cff 0%, #4fd1c5 100%);
+  --accent-grad-soft: linear-gradient(135deg, rgba(91, 140, 255, 0.18), rgba(79, 209, 197, 0.18));
 
   /* Semantic */
   --success:        #4ade80;
@@ -43,7 +43,7 @@
 
   /* Shadows */
   --shadow-glass: 0 16px 40px -16px rgba(8, 4, 32, 0.55), 0 2px 6px rgba(8, 4, 32, 0.25);
-  --shadow-glow:  0 0 0 1px rgba(124, 92, 255, 0.35), 0 0 28px rgba(124, 92, 255, 0.35);
+  --shadow-glow:  0 0 0 1px rgba(91, 140, 255, 0.35), 0 0 28px rgba(91, 140, 255, 0.35);
 }
 
 * {
@@ -67,7 +67,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--text-primary);
-  background: #060614;
+  background: #050816;
   overflow-x: hidden;
   position: relative;
 }
@@ -79,12 +79,11 @@ body::before {
   inset: -20vmax;
   z-index: -2;
   background:
-    radial-gradient(45vmax 45vmax at 18% 22%, rgba(124, 92, 255, 0.55), transparent 60%),
-    radial-gradient(50vmax 50vmax at 82% 18%, rgba(41, 217, 194, 0.40), transparent 60%),
-    radial-gradient(55vmax 55vmax at 65% 85%, rgba(255, 122, 198, 0.35), transparent 60%),
-    radial-gradient(60vmax 60vmax at 12% 90%, rgba(96, 165, 250, 0.30), transparent 60%);
-  filter: blur(40px);
-  animation: aurora-drift 32s ease-in-out infinite alternate;
+    radial-gradient(50vmax 50vmax at 20% 25%, rgba(91, 140, 255, 0.45), transparent 60%),
+    radial-gradient(55vmax 55vmax at 80% 80%, rgba(79, 209, 197, 0.30), transparent 60%),
+    radial-gradient(45vmax 45vmax at 50% 50%, rgba(167, 139, 250, 0.18), transparent 70%);
+  filter: blur(48px);
+  animation: aurora-drift 36s ease-in-out infinite alternate;
   pointer-events: none;
 }
 
@@ -133,7 +132,7 @@ a:hover {
 }
 
 ::selection {
-  background: rgba(124, 92, 255, 0.45);
+  background: rgba(91, 140, 255, 0.45);
   color: #fff;
 }
 

@@ -176,7 +176,7 @@
   width: 100%;
   padding: 0.75rem 0.9rem;
   background: var(--accent-grad-soft);
-  border: 1px solid rgba(124, 92, 255, 0.32);
+  border: 1px solid rgba(91, 140, 255, 0.32);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
@@ -186,8 +186,8 @@
 
 .wallet-card:hover {
   transform: translateY(-1px);
-  border-color: rgba(124, 92, 255, 0.55);
-  background: linear-gradient(135deg, rgba(124, 92, 255, 0.26), rgba(41, 217, 194, 0.26));
+  border-color: rgba(91, 140, 255, 0.55);
+  background: linear-gradient(135deg, rgba(91, 140, 255, 0.26), rgba(79, 209, 197, 0.26));
 }
 
 .wallet-card-top {
@@ -483,7 +483,7 @@
   height: 6px;
   border-radius: 50%;
   background: var(--accent-2);
-  box-shadow: 0 0 8px rgba(41, 217, 194, 0.6);
+  box-shadow: 0 0 8px rgba(79, 209, 197, 0.6);
   flex-shrink: 0;
 }
 
@@ -544,9 +544,9 @@
 .option-row input:focus,
 .search-input:focus,
 .sort-select:focus {
-  border-color: rgba(124, 92, 255, 0.55);
+  border-color: rgba(91, 140, 255, 0.55);
   background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.20);
+  box-shadow: 0 0 0 3px rgba(91, 140, 255, 0.20);
 }
 
 .field textarea::placeholder,
@@ -598,7 +598,7 @@
   background: var(--accent-grad);
   border-color: transparent;
   color: #fff;
-  box-shadow: 0 6px 20px -8px rgba(124, 92, 255, 0.7);
+  box-shadow: 0 6px 20px -8px rgba(91, 140, 255, 0.7);
 }
 
 .form-error {
@@ -641,12 +641,12 @@
   background: var(--accent-grad);
   color: #fff;
   border-color: transparent;
-  box-shadow: 0 8px 24px -10px rgba(124, 92, 255, 0.7);
+  box-shadow: 0 8px 24px -10px rgba(91, 140, 255, 0.7);
 }
 
 .primary-button:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 12px 32px -10px rgba(124, 92, 255, 0.85);
+  box-shadow: 0 12px 32px -10px rgba(91, 140, 255, 0.85);
 }
 
 .primary-button:disabled {
@@ -792,7 +792,7 @@
 .filter-chip.active {
   background: var(--accent-grad);
   color: #fff;
-  box-shadow: 0 4px 14px -6px rgba(124, 92, 255, 0.7);
+  box-shadow: 0 4px 14px -6px rgba(91, 140, 255, 0.7);
 }
 
 .sort-select {
@@ -942,7 +942,7 @@
 
 .poll-option-btn:hover:not(:disabled) {
   background: var(--glass-bg-strong);
-  border-color: rgba(124, 92, 255, 0.4);
+  border-color: rgba(91, 140, 255, 0.4);
   transform: translateX(2px);
 }
 
@@ -952,8 +952,8 @@
 }
 
 .poll-option-btn.voted {
-  border-color: rgba(124, 92, 255, 0.35);
-  background: rgba(124, 92, 255, 0.10);
+  border-color: rgba(91, 140, 255, 0.35);
+  background: rgba(91, 140, 255, 0.10);
 }
 
 .poll-option-label {
@@ -982,7 +982,7 @@
   background: var(--accent-grad);
   border-radius: 999px;
   transition: width 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 0 8px rgba(124, 92, 255, 0.5);
+  box-shadow: 0 0 8px rgba(91, 140, 255, 0.5);
 }
 
 .poll-card-footer {
