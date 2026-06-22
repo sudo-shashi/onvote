@@ -4,11 +4,10 @@ OnVote is a mini end-to-end Stellar + Soroban dApp: a multi-wallet polling app b
 
 ## Level 3 Submission Checklist (fill before submitting)
 
-- Live demo link: https://online-live-poll.vercel.app/
+- Live demo link: https://onvote.vercel.app/
 - Demo video (1 minute) link: https://drive.google.com/file/d/1SRK_eF2qJyIfuN-KMlgzCpeacAeYJ23t/view?usp=sharing
 - Test output screenshot (3+ passing tests): ✅ (see below)
-- Public GitHub repo link: `https://github.com/rohit-012005/Online-Live-Poll.git`
-- 3+ meaningful commits for Level 3: ✅
+- Public GitHub repo link: `https://github.com/sudo-shashi/onvote`
 
 
 ## Submission Overview
@@ -85,7 +84,7 @@ Below is a mobile view screenshot demonstrating the responsive layout on narrow 
 
 ## Live Demo
 
-https://online-live-poll.vercel.app/
+https://onvote.vercel.app/
 
 ## Setup
 
@@ -202,7 +201,7 @@ Walkthrough:
 
 ## Submission Notes
 
-- GitHub repository: `https://github.com/Sagar522290/livepoll.git`
+- GitHub repository: `https://github.com/sudo-shashi/onvote`
 - The project includes multiple meaningful commits in git history
 - The contract is deployed on testnet and called from the frontend
 - Real-time event integration and visible transaction status are implemented
